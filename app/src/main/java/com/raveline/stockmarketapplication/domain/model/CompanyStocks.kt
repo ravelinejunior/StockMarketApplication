@@ -5,3 +5,4 @@ data class CompanyStocks(
     val symbol: String,
     val exchange: String,
 )
+
