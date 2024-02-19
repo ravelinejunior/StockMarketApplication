@@ -1,4 +1,4 @@
-package com.raveline.stockmarketapplication.presentation.events
+package com.raveline.stockmarketapplication.presentation.screen.companies_stocks_screen
 
 sealed class CompaniesStockEvent {
     data object Refresh : CompaniesStockEvent()

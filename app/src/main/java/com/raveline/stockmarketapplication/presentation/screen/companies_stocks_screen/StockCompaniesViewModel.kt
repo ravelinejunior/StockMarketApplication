@@ -1,4 +1,4 @@
-package com.raveline.stockmarketapplication.presentation.viewmodel
+package com.raveline.stockmarketapplication.presentation.screen.companies_stocks_screen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raveline.stockmarketapplication.domain.model.CompaniesStockState
 import com.raveline.stockmarketapplication.domain.repository.StockCompanyRepository
-import com.raveline.stockmarketapplication.presentation.events.CompaniesStockEvent
 import com.raveline.stockmarketapplication.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
