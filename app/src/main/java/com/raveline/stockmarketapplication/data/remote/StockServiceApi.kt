@@ -16,7 +16,7 @@ import retrofit2.http.Query
  * @return Returns a `ResponseBody` which contains the response from the server.
  */
 interface StockServiceApi {
-    @GET("function=LISTING_STATUS")
+    @GET("query?function=LISTING_STATUS")
     suspend fun getListStocks(
         @Query("apikey") apiKey: String = API_KEY
     ): ResponseBody

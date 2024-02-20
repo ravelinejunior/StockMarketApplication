@@ -4,7 +4,7 @@ import com.raveline.stockmarketapplication.domain.model.CompanyStocks
 import com.raveline.stockmarketapplication.util.Resource
 import kotlinx.coroutines.flow.Flow
 
-interface StockCompanyRepository {
+interface CompanyStockRepository {
     suspend fun getCompanyStocks(
         fetchFromRemote: Boolean,
         searchQuery:String

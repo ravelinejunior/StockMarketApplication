@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.io.InputStreamReader
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * CSVParserImpl is a class that implements the CSVParser interface for CompanyStocks.
@@ -14,6 +15,7 @@ import javax.inject.Inject
  *
  * @constructor Injects the dependencies needed by this class.
  */
+@Singleton
 class CSVParserImpl @Inject constructor() : CSVParser<CompanyStocks> {
 
     /**

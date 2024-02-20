@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raveline.stockmarketapplication.domain.model.CompaniesStockState
-import com.raveline.stockmarketapplication.domain.repository.StockCompanyRepository
+import com.raveline.stockmarketapplication.domain.repository.CompanyStockRepository
 import com.raveline.stockmarketapplication.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -24,11 +24,15 @@ import javax.inject.Inject
  * @property searchJob A nullable Job object for handling search operations.
  */
 @HiltViewModel
-class StockCompaniesViewModel @Inject constructor(
-    private val repository: StockCompanyRepository
+class CompaniesStockViewModel @Inject constructor(
+    private val repository: CompanyStockRepository
 ) : ViewModel() {
     var state by mutableStateOf(CompaniesStockState())
     private var searchJob: Job? = null
+
+    init {
+        getStocks()
+    }
 
     /**
      * Handles the given event.

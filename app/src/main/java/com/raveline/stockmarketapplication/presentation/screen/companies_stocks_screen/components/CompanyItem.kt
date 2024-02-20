@@ -1,12 +1,14 @@
 package com.raveline.stockmarketapplication.presentation.screen.companies_stocks_screen.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,17 +32,22 @@ import com.raveline.stockmarketapplication.domain.model.CompanyStocks
  */
 @Composable
 fun CompanyItem(
+    modifier: Modifier = Modifier,
     companyItem: CompanyStocks,
-    modifier: Modifier = Modifier
+    onClick: () -> Unit = {},
 ) {
     Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Column(
             modifier = Modifier
+                .padding(8.dp)
                 .weight(1f)
+                .clickable(
+                    enabled = true,
+                    onClick = onClick,
+                )
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     text = companyItem.name,
@@ -49,7 +56,8 @@ fun CompanyItem(
                     maxLines = 1,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
@@ -57,7 +65,6 @@ fun CompanyItem(
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Light,
-                    maxLines = 1,
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))

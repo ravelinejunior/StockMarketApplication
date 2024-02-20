@@ -6,13 +6,14 @@ import com.raveline.stockmarketapplication.data.mapper.toCompanyStocks
 import com.raveline.stockmarketapplication.data.mapper.toCompanyStocksEntity
 import com.raveline.stockmarketapplication.data.remote.StockServiceApi
 import com.raveline.stockmarketapplication.domain.model.CompanyStocks
-import com.raveline.stockmarketapplication.domain.repository.StockCompanyRepository
+import com.raveline.stockmarketapplication.domain.repository.CompanyStockRepository
 import com.raveline.stockmarketapplication.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
 
 /**
@@ -22,11 +23,12 @@ import javax.inject.Inject
  * @property stockCompanyDatabase An instance of StockCompanyDatabase for local data storage.
  * @property csvParser An instance of CSVParser for parsing CSV data.
  */
-class StockCompanyRepositoryImpl @Inject constructor(
+@Singleton
+class CompanyStockRepositoryImpl @Inject constructor(
     private val apiService: StockServiceApi,
     private val stockCompanyDatabase: StockCompanyDatabase,
     private val csvParser: CSVParser<CompanyStocks>
-) : StockCompanyRepository {
+) : CompanyStockRepository {
 
     /**
      * Fetches a list of CompanyStocks either from remote or local storage based on the parameters.
