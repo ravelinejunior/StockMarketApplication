@@ -1,6 +1,8 @@
 package com.raveline.stockmarketapplication.data.mapper
 
 import com.raveline.stockmarketapplication.data.local.entity.CompanyStocksEntity
+import com.raveline.stockmarketapplication.data.remote.dto.CompanyStockInfoDto
+import com.raveline.stockmarketapplication.domain.model.CompanyStockInfoModel
 import com.raveline.stockmarketapplication.domain.model.CompanyStocks
 
 /**
@@ -25,4 +27,12 @@ fun CompanyStocks.toCompanyStocksEntity() = CompanyStocksEntity(
     name = this.name,
     symbol = this.symbol,
     exchange = this.exchange
+)
+
+fun CompanyStockInfoDto.toCompanyInfo() = CompanyStockInfoModel(
+    symbol = symbol?:"",
+    name = name?:"",
+    description = description?:"",
+    country = country?:"",
+    industry = industry?:""
 )

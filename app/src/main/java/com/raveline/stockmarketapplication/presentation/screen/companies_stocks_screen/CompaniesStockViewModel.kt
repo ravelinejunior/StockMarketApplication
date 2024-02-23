@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.raveline.stockmarketapplication.domain.model.CompaniesStockState
 import com.raveline.stockmarketapplication.domain.repository.CompanyStockRepository
 import com.raveline.stockmarketapplication.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
