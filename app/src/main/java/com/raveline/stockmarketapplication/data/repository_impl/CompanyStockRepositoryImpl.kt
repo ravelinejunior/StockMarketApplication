@@ -2,10 +2,13 @@ package com.raveline.stockmarketapplication.data.repository_impl
 
 import com.raveline.stockmarketapplication.data.csv.CSVParser
 import com.raveline.stockmarketapplication.data.local.StockCompanyDatabase
+import com.raveline.stockmarketapplication.data.mapper.toCompanyInfo
 import com.raveline.stockmarketapplication.data.mapper.toCompanyStocks
 import com.raveline.stockmarketapplication.data.mapper.toCompanyStocksEntity
 import com.raveline.stockmarketapplication.data.remote.StockServiceApi
+import com.raveline.stockmarketapplication.domain.model.CompanyStockInfoModel
 import com.raveline.stockmarketapplication.domain.model.CompanyStocks
+import com.raveline.stockmarketapplication.domain.model.IntraDayInfoModel
 import com.raveline.stockmarketapplication.domain.repository.CompanyStockRepository
 import com.raveline.stockmarketapplication.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -15,19 +18,12 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
-/**
- * Implementation of the StockCompanyRepository interface.
- *
- * @property apiService An instance of StockServiceApi for making network requests.
- * @property stockCompanyDatabase An instance of StockCompanyDatabase for local data storage.
- * @property csvParser An instance of CSVParser for parsing CSV data.
- */
 @Singleton
 class CompanyStockRepositoryImpl @Inject constructor(
     private val apiService: StockServiceApi,
     private val stockCompanyDatabase: StockCompanyDatabase,
-    private val csvParser: CSVParser<CompanyStocks>
+    private val csvParserCompanyStock: CSVParser<CompanyStocks>,
+    private val csvParserIntraDayInfo: CSVParser<IntraDayInfoModel>,
 ) : CompanyStockRepository {
 
     /**
@@ -71,7 +67,7 @@ class CompanyStockRepositoryImpl @Inject constructor(
             // Fetch remote data
             val remoteCompaniesStocking = try {
                 val response = apiService.getListStocks()
-                csvParser.parse(response.byteStream())
+                csvParserCompanyStock.parse(response.byteStream())
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error(message = e.message.toString()))
@@ -103,6 +99,59 @@ class CompanyStockRepositoryImpl @Inject constructor(
                 // Emit loading state
                 emit(Resource.Loading(isLoading = false))
             }
+        }
+    }
+
+    /**
+     * Fetches the intra-day information of a specific stock symbol.
+     *
+     * This function makes a network request to fetch the intra-day information of a specific stock symbol.
+     * The data is then parsed from CSV format into a list of IntraDayInfoModel objects.
+     * If the network request or the parsing fails, an error resource is returned.
+     *
+     * @param symbol The stock symbol to fetch the intra-day information for.
+     * @return A Resource wrapping a list of IntraDayInfoModel objects.
+     * @throws IOException If there is a network error.
+     * @throws HttpException If there is an HTTP error.
+     */
+    override suspend fun getIntraDayInfo(symbol: String): Resource<List<IntraDayInfoModel>> {
+        return try {
+            val response = apiService.getIntraDayInfo(symbol = symbol)
+            val csvParsedData = csvParserIntraDayInfo.parse(stream = response.byteStream())
+            Resource.Success(data = csvParsedData)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Resource.Error(message = e.message.toString())
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            Resource.Error(message = e.message.toString())
+        }
+    }
+
+    /**
+     * Fetches the stock information of a specific company.
+     *
+     * This function makes a network request to fetch the stock information of a specific company.
+     * The data is then parsed into a CompanyStockInfoModel object.
+     * If the network request or the parsing fails, an error resource is returned.
+     *
+     * @param symbol The stock symbol to fetch the stock information for.
+     * @return A Resource wrapping a CompanyStockInfoModel object.
+     * @throws IOException If there is a network error.
+     * @throws HttpException If there is an HTTP error.
+     */
+    override suspend fun getCompanyStockInfo(
+        symbol: String
+    ): Resource<CompanyStockInfoModel> {
+        return try {
+            val response = apiService.getCompanyStockInfo(symbol = symbol)
+            Resource.Success(data = response.toCompanyInfo())
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Resource.Error(message = e.message.toString())
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            Resource.Error(message = e.message.toString())
         }
     }
 }

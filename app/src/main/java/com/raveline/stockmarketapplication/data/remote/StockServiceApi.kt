@@ -22,20 +22,6 @@ interface StockServiceApi {
         @Query("apikey") apiKey: String = API_KEY
     ): ResponseBody
 
-    /**
-     * `getCompanyInfo` is a suspending function that makes a GET request to the `query?function=TIME_SERIES_INTRADAY&interval=60min&datatype=csv` endpoint.
-     *
-     * @GET("query?function=TIME_SERIES_INTRADAY&interval=60min&datatype=csv") annotation indicates that this is a GET request to the `query?function=TIME_SERIES_INTRADAY&interval=60min&datatype=csv` endpoint.
-     *
-     * @param symbol This is the symbol of the company for which the information is requested.
-     * @param apiKey This is the API key used for authentication. It defaults to `API_KEY`.
-     * @return Returns a `ResponseBody` which contains the response from the server.
-     */
-    @GET("query?function=TIME_SERIES_INTRADAY&interval=60min&datatype=csv")
-    suspend fun getCompanyInfo(
-        @Query("symbol") symbol: String,
-        @Query("apikey") apiKey: String = API_KEY,
-    ): ResponseBody
 
     /**
      * `getCompanyStockInfo` is a suspending function that makes a GET request to the `query?function=OVERVIEW` endpoint.
@@ -51,4 +37,20 @@ interface StockServiceApi {
         @Query("symbol") symbol: String,
         @Query("apikey") apiKey: String = API_KEY,
     ): CompanyStockInfoDto
+
+    /**
+     * `getIntraDayInfo` is a suspending function that makes a GET request to the `query?function=TIME_SERIES_INTRADAY&interval=60min&datatype=csv` endpoint.
+     *
+     * @GET("query?function=TIME_SERIES_INTRADAY&interval=60min&datatype=csv") annotation indicates that this is a GET request to the `query?function=TIME_SERIES_INTRADAY&interval=60min&datatype=csv` endpoint.
+     *
+     * @param symbol This is the symbol of the company for which the information is requested.
+     * @param apiKey This is the API key used for authentication. It defaults to `API_KEY`.
+     * @return Returns a `ResponseBody` which contains the response from the server.
+     */
+    @GET("query?function=TIME_SERIES_INTRADAY&interval=60min&datatype=csv")
+    suspend fun getIntraDayInfo(
+        @Query("symbol") symbol: String,
+        @Query("apikey") apiKey: String = API_KEY,
+    ): ResponseBody
+
 }

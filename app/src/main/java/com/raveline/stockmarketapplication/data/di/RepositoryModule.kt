@@ -2,9 +2,11 @@ package com.raveline.stockmarketapplication.data.di
 
 
 import com.raveline.stockmarketapplication.data.csv.CSVParser
-import com.raveline.stockmarketapplication.data.csv.CSVParserImpl
+import com.raveline.stockmarketapplication.data.csv.CSVParserCompanyStockImpl
+import com.raveline.stockmarketapplication.data.csv.CSVParserIntraDayInfoImpl
 import com.raveline.stockmarketapplication.data.repository_impl.CompanyStockRepositoryImpl
 import com.raveline.stockmarketapplication.domain.model.CompanyStocks
+import com.raveline.stockmarketapplication.domain.model.IntraDayInfoModel
 import com.raveline.stockmarketapplication.domain.repository.CompanyStockRepository
 import dagger.Binds
 import dagger.Module
@@ -39,7 +41,18 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindCSVParser(
-        csvParserImpl: CSVParserImpl
+        csvParserImpl: CSVParserCompanyStockImpl
     ): CSVParser<CompanyStocks>
+
+    /**
+     * This function tells Dagger Hilt how to provide an instance of CSVParser<IntraDayInfoModel>.
+     * It takes an instance of CSVParserImpl as a parameter and returns an instance of CSVParser<IntraDayInfoModel>.
+     * This means that whenever an instance of CSVParser<IntraDayInfoModel> is requested, Dagger Hilt will provide an instance of CSVParserImpl.
+     */
+    @Binds
+    @Singleton
+    abstract fun bindCSVIntraDayParser(
+        csvParserIntraDayInfoImpl: CSVParserIntraDayInfoImpl
+    ): CSVParser<IntraDayInfoModel>
 
 }

@@ -16,7 +16,7 @@ import javax.inject.Singleton
  * @constructor Injects the dependencies needed by this class.
  */
 @Singleton
-class CSVParserImpl @Inject constructor() : CSVParser<CompanyStocks> {
+class CSVParserCompanyStockImpl @Inject constructor() : CSVParser<CompanyStocks> {
 
     /**
      * This function parses an InputStream of CSV data into a list of CompanyStocks objects.
