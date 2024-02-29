@@ -76,7 +76,7 @@ fun StockChart(
             val spacePerHour = (size.width - spacing) / intraDayList.size
 
             // Draw hour labels
-            (0 until intraDayList.size - 1 step 2).forEach { index ->
+            (intraDayList.indices step 2).forEach { index ->
                 val intraInfo = intraDayList[index]
                 val hour = intraInfo.date.hour
                 drawContext.canvas.nativeCanvas.apply {
@@ -124,7 +124,7 @@ fun StockChart(
                     quadraticBezierTo(
                         x,
                         y,
-                        (x + nextX) / 2f,
+                        lastX,
                         (y + nextY) / 2f
                     )
                 }

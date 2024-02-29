@@ -20,6 +20,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.raveline.stockmarketapplication.presentation.screen.companies_stocks_screen.components.CompanyItem
+import com.raveline.stockmarketapplication.presentation.screen.destinations.CompanyInfoScreenDestination
 
 @Composable
 @Destination(start = true)
@@ -33,15 +34,15 @@ fun CompaniesStockScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 8.dp,horizontal = 8.dp),
+            .padding(vertical = 8.dp, horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top,
     ) {
 
         OutlinedTextField(
-              modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             value = state.searchQuery,
             onValueChange = {
                 viewModel.onEvent(
@@ -75,7 +76,7 @@ fun CompaniesStockScreen(
                         companyItem = companyItem,
                         onClick = {
                             navigator.navigate(
-                                route = "companyInfoScreen/${companyItem.symbol}"
+                                CompanyInfoScreenDestination(symbol = companyItem.symbol)
                             )
                         }
                     )
